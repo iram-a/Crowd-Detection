@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Train Crowd Status – 12 Coaches</title>
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" role="application" aria-label="Train crowd status dashboard">
+    <header class="header">
+      <div class="title" aria-label="App title">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 16h14a2 2 0 0 0 2-2V7a3 3 0 0 0-3-3H6A3 3 0 0 0 3 7v7a2 2 0 0 0 2 2Z" stroke="white" stroke-opacity=".9" stroke-width="1.6"/>
+            <path d="M7 21l2-2m6 2l2-2" stroke="white" stroke-opacity=".9" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:20px;">Train Crowd Status</div>
+          <div style="font-size:12px; color:var(--muted); margin-top:2px;">12-coach live view • Auto-refresh</div>
+        </div>
+      </div>
+
+      <div class="statusbar" id="connectionBar" aria-live="polite">
+        <div class="dot warn" id="connDot" aria-hidden="true"></div>
+        <div id="connText">Connecting…</div>
+        <div class="pill" id="lastUpdated">--</div>
+      </div>
+    </header>
+
+    <section class="card track-wrap" aria-label="Train section">
+      <div class="track" id="track" tabindex="0" aria-label="Scrollable track">
+        <div class="train" id="train">
+          <div class="engine" aria-hidden="true">ENGINE</div>
+          <!-- Coaches will be injected here by JS -->
+        </div>
+      </div>
+      <div class="meta">
+        <div class="legend" aria-label="Legend">
+          <div class="item"><span class="swatch" style="background:var(--safe)"></span> Green = Safe</div>
+          <div class="item"><span class="swatch" style="background:var(--moderate)"></span> Yellow = Moderate</div>
+          <div class="item"><span class="swatch" style="background:var(--over)"></span> Red = Overcrowded</div>
+        </div>
+        <div class="pill">Tap/hover a coach for details</div>
+      </div>
+    </section>
+
+    <section class="legend-card">
+      <div class="pill">Endpoint: <code>/crowd_status</code></div>
+      <button id="refreshBtn" class="pill" style="cursor:pointer">Refresh Now</button>
+      <label class="pill" style="display:flex; align-items:center; gap:8px; cursor:pointer">
+        <input type="checkbox" id="autoToggle" checked /> Auto-refresh
+      </label>
+    </section>
+
+    <div class="footer">Demo-friendly: works on laptop & mobile. Keyboard: use ←/→ to scroll coaches.</div>
+  </div>
+
+  <template id="coachTemplate">
+    <div class="coach" role="group" aria-roledescription="coach">
+      <div class="bar"></div>
+      <div class="body">
+        <span class="badge">C-##</span>
+        <span class="statusText">—</span>
+      </div>
+      <div class="label">Occupancy: <span class="occ">—</span></div>
+    </div>
+  </template>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>
